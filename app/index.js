@@ -1,26 +1,68 @@
-// const cell = document.getElementById("cell_1_2");
-let bombArray = [];
-let closeCells = [];
+function getCloseCells(cellId) {
+  let row = parseInt(cellId.charAt(5));
+  let column = parseInt(cellId.charAt(7));
+  let closeCells = [];
 
-// function getCloseCells(cellId) {
-//   let row = parseInt(cellId.charAt(5));
-//   let column = parseInt(cellId.charAt(7));
-//   let closeCells = [];
-//     closeCells.push(
-//       `cell_${row - 1}_${column - 1}`,
-//       `cell_${row - 1}_${column}`,
-//       `cell_${row - 1}_${column + 1}`,
-//       `cell_${row}_${column - 1}`,
-//       `cell_${row}_${column + 1}`,
-//       `cell_${row + 1}_${column - 1}`,
-//       `cell_${row + 1}_${column}`,
-//       `cell_${row + 1}_${column + 1}`
-//     );
+  if(document.getElementById(`cell_${row - 1}_${column - 1}`)){
+    closeCells.push(`cell_${row - 1}_${column - 1}`);
+  };
 
-//     return closeCells;
-// };
+  if(document.getElementById(`cell_${row - 1}_${column}`)){
+    closeCells.push(`cell_${row - 1}_${column}`);
+  };
 
+  if(document.getElementById(`cell_${row - 1}_${column + 1}`)){
+    closeCells.push(`cell_${row - 1}_${column + 1}`);
+  };
 
+  if(document.getElementById(`cell_${row}_${column - 1}`)){
+    closeCells.push(`cell_${row}_${column - 1}`);
+  };
+
+  if(document.getElementById(`cell_${row}_${column + 1}`)){
+    closeCells.push(`cell_${row}_${column + 1}`);
+  };
+
+  if(document.getElementById(`cell_${row + 1}_${column - 1}`)){
+    closeCells.push(`cell_${row + 1}_${column - 1}`);
+  };
+
+  if(document.getElementById(`cell_${row + 1}_${column}`)){
+    closeCells.push(`cell_${row + 1}_${column}`);
+  };
+
+  if(document.getElementById(`cell_${row + 1}_${column + 1}`)){
+    closeCells.push(`cell_${row + 1}_${column + 1}`);
+  };
+
+    return closeCells;
+};
+
+function revealCloseBlank(cellId) {
+  let closeCells = getCloseCells(cellId);
+  closeCells.forEach(cId => {
+    cell = document.getElementById(cId);
+  
+        //Si case pas encore révélée
+        if(cell.classList.contains('hidden')) {
+
+          //Si la case est un chiffre
+          if(cell.classList.contains('number')) {
+            cell.classList.remove("hidden");
+            cell.classList.add("reveal");
+            
+          };
+
+          //Si la case est vide
+          if(!cell.classList.contains('number') && !cell.classList.contains('bomb')) {
+            cell.classList.remove("hidden");
+            cell.classList.add("reveal");
+          }
+
+        };
+  }
+
+)};
 
 
 
@@ -31,7 +73,6 @@ allCells.forEach((element) => {
     
     //Si chiffre, révéler la case
     if(event.target.classList.contains('number')) {
-      console.log('chiffre');
       element.classList.remove("hidden");
       element.classList.add("reveal");
     };
@@ -39,7 +80,6 @@ allCells.forEach((element) => {
     
     //Si mine, révéler toutes les cases,mettre en évidence la case, mettre en evidence les bombes trouvées puis afficher game over
     if(event.target.classList.contains('bomb')) {
-      console.log('bomb');
       event.target.classList.add('clickbomb')
       event.target.classList.remove('fa-land-mine-on')
       event.target.classList.add('fa-explosion')
@@ -50,18 +90,25 @@ allCells.forEach((element) => {
           cell.classList.add('findbomb');
         } else {
           cell.classList.remove("hidden");
-        cell.classList.add("reveal");
+          cell.classList.add("reveal");
         };
        
       });
       
-    }
+    };
     
-    
-    element.classList.remove("hidden");
-    element.classList.add("reveal");
+    //Si case vide, on révéle la case puis on regarde celles autour
+    if(!event.target.classList.contains('number') && !event.target.classList.contains('bomb')) {
+      console.log('case vide');
+      element.classList.remove("hidden");
+      element.classList.add("reveal");
+      let cellId = event.target.id;
+      revealCloseBlank(cellId);
 
-    // revealCells(event);
+      
+
+    };
+    
   });
 
 });
@@ -92,48 +139,6 @@ function removeFlag(event) {
   event.target.addEventListener("contextmenu", (e) => addFlag(e));
 }
 //HANDLE RIGHT CLICK\\
-
-// function revealCells2(cellId) {
-
-// const closeCells = getCloseCells(cellId);
-// console.log(closeCells);
-
-
-// closeCells.forEach((e) => {
-//   let closeCell = document.getElementById(e);
-//   if(closeCell && !closeCell.classList.contains('bomb')) {
-//     closeCell.classList.remove("hidden");
-//         closeCell.classList.add("reveal");
-//   } else {
-
-// // TODO
-//   }
-
-// })
-
-
-// }
-
-
-// function revealCells(event) {
-//   const currentCellId = event.target.id;
-  
-//   revealCells2(currentCellId);
-
-// };
-
-// let bombCells = document.querySelectorAll(".bomb");
-   
-//     console.log(bombCells);
-//     bombCells.forEach((element) => {
-//       element.addEventListener("click", async function () {
-//         // allCells.classList.remove("hidden");
-//         element.classList.add("bombclick");
-
-
-//         confirm("PERDU !");
-//       });
-//     });
 
 
 
