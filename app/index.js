@@ -40,8 +40,9 @@ function getCloseCells(cellId) {
 
 function revealCloseBlank(cellId) {
   let closeCells = getCloseCells(cellId);
+  console.log(closeCells);
   closeCells.forEach(cId => {
-    cell = document.getElementById(cId);
+  cell = document.getElementById(cId);
   
         //Si case pas encore révélée
         if(cell.classList.contains('hidden')) {
@@ -57,6 +58,8 @@ function revealCloseBlank(cellId) {
           if(!cell.classList.contains('number') && !cell.classList.contains('bomb')) {
             cell.classList.remove("hidden");
             cell.classList.add("reveal");
+            console.log('heho');
+            revealCloseBlank(cell.id);
           }
 
         };
@@ -64,9 +67,9 @@ function revealCloseBlank(cellId) {
 
 )};
 
+function handleGame() {
 
-
-//HANDLE LEFT CLICK\\
+  //HANDLE LEFT CLICK\\
 let allCells = document.querySelectorAll(".cell");
 allCells.forEach((element) => {
   element.addEventListener("click", (event) => {
@@ -139,6 +142,12 @@ function removeFlag(event) {
   event.target.addEventListener("contextmenu", (e) => addFlag(e));
 }
 //HANDLE RIGHT CLICK\\
+
+
+};
+
+handleGame();
+
 
 
 

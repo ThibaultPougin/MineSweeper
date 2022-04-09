@@ -2,7 +2,7 @@ function getRandomInt() {
   return Math.floor(Math.random() * 9) + 1;
 };
 
-async function initBoard(event) {
+function initBoard(event) {
     let bombArray = [];
     let closeCells = [];
     let firstCellRow = parseInt(event.target.id.charAt(5));
@@ -77,11 +77,14 @@ async function initBoard(event) {
         cell.classList.add('number');
       }
     });
+
+    
       
   };
 
 let board = document.querySelector(".board");
-board.addEventListener("click", (event) => {
+
+board.addEventListener("mousedown", (event) => {
     initBoard(event);       
   },
   { once: true }
