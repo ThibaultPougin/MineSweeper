@@ -99,7 +99,8 @@ function handleCounter() {
 function handleWin() {
   let numberHidden = document.querySelectorAll('.number.hidden');
   let blankHidden = document.querySelectorAll(':not(.bomb):not(.number).hidden');
-  if(numberHidden.length === 0 && blankHidden.length === 0) {
+  let explosion = document.querySelectorAll('.bomb.reveal');
+  if(numberHidden.length === 0 && blankHidden.length === 0 && explosion.length === 0) {
     
     
 
@@ -154,7 +155,11 @@ allCells.forEach((element) => {
         };
        
       });
-      return;
+      
+    modalText.innerHTML = 'Perdu !';
+    modal.style.display = "block";
+    modalText.style.color = "red";
+
     };
     
     //Si case vide, on révéle la case puis on regarde celles autour
