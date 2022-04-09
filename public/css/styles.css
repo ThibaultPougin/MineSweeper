@@ -1,0 +1,125 @@
+h1 {
+    text-align: center;
+}
+
+.board {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cell {
+    background-color: #DFEAF0;
+    border: solid black 1px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    text-shadow: 0 0 2px black;
+    
+}
+
+
+
+.row {
+    display: flex;
+}
+
+.bomb {
+    /* background: url('../img/bomb.png') no-repeat center center fixed; */
+    line-height: 60px !important;
+    font-size: 25px !important;
+    
+    
+}
+
+.clickbomb {
+
+    line-height: 60px !important;
+    font-size: 25px !important;
+    background-color: red;
+    
+    /* background-image: url('../img/bomb.png');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center; */
+    
+
+}
+
+.findbomb {
+    background-color: green;
+
+}
+
+.flag {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    background-image: url('../img/red-flag.png');
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #86C6EE;
+    box-shadow:
+    0px 2px 2px 0px rgba(0, 0, 0, 0.5),
+    0px 2px 2px 0px rgba(255, 255, 255, 0.5) inset;
+}
+
+.hidden {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: #86C6EE;
+    box-shadow:
+    0px 2px 2px 0px rgba(0, 0, 0, 0.5),
+    0px 2px 2px 0px rgba(255, 255, 255, 0.5) inset;
+}
+
+.number-1 {
+    color: blue;
+    font-size: 25px;
+
+}
+.number-2 {
+    color: green;
+    font-size: 25px;
+}
+.number-3 {
+    color: red;
+    font-size: 25px;
+}
+.number-4 {
+    color: darkblue;
+    font-size: 25px;
+}
+.number-5 {
+    color: maroon;
+    font-size: 25px;
+}
+.number-6 {
+    color: turquoise;
+    font-size: 25px;
+}
+.number-7 {
+    color: black;
+    font-size: 25px;
+}
+.number-8 {
+    color: gray;
+    font-size: 25px;
+}
+
+.border-up-left {
+    border-top-left-radius: 15px;
+}
+.border-up-right {
+    border-top-right-radius: 15px;
+}
+.border-down-left {
+    border-bottom-left-radius: 15px;
+}
+.border-down-right {
+    border-bottom-right-radius: 15px;
+}
