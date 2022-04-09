@@ -1,3 +1,19 @@
+let allCells = document.querySelectorAll(".cell");
+let modal = document.getElementById("myModal");
+let modalText = document.getElementById("modal-text");
+let span = document.getElementsByClassName("close")[0];
+
+//Handle Win or Lose Modale
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+span.onclick = function() {
+  modal.style.display = "none";
+};
+
 function getCloseCells(cellId) {
   let row = parseInt(cellId.charAt(5));
   let column = parseInt(cellId.charAt(7));
@@ -40,7 +56,6 @@ function getCloseCells(cellId) {
 
 function revealCloseBlank(cellId) {
   let closeCells = getCloseCells(cellId);
-  console.log(closeCells);
   closeCells.forEach(cId => {
   cell = document.getElementById(cId);
   
@@ -58,7 +73,6 @@ function revealCloseBlank(cellId) {
           if(!cell.classList.contains('number') && !cell.classList.contains('bomb')) {
             cell.classList.remove("hidden");
             cell.classList.add("reveal");
-            console.log('heho');
             revealCloseBlank(cell.id);
           }
 
@@ -67,10 +81,52 @@ function revealCloseBlank(cellId) {
 
 )};
 
+function handleCounter() {
+
+  let flags = document.getElementsByClassName('flag');
+  let counter = document.getElementById('mine-count');
+  let counterText = document.getElementById('mine-text');
+  counter.innerHTML = 10 - flags.length;
+
+  if(flags.length === 9 || flags.length === 10 || flags.length === 11) {
+    counterText.innerHTML = '&nbsp;mine restante';
+  } else {
+    counterText.innerHTML = '&nbsp;mines restantes';
+  };
+
+};
+
+function handleWin() {
+  let numberHidden = document.querySelectorAll('.number.hidden');
+  let blankHidden = document.querySelectorAll(':not(.bomb):not(.number).hidden');
+  if(numberHidden.length === 0 && blankHidden.length === 0) {
+    
+    
+
+    allCells.forEach(cell => {
+      if(cell.classList.contains('hidden')) {
+        cell.classList.remove('hidden');
+        cell.classList.add('findbomb');
+      }
+      if(cell.classList.contains('flag')) {
+        cell.classList.remove('hidden');
+        cell.classList.remove('flag');
+        cell.classList.add('findbomb');
+      }
+
+     
+    });
+    
+  modalText.innerHTML = 'Partie gagnée !';
+  modal.style.display = "block";
+    
+  }
+
+};
+
 function handleGame() {
 
   //HANDLE LEFT CLICK\\
-let allCells = document.querySelectorAll(".cell");
 allCells.forEach((element) => {
   element.addEventListener("click", (event) => {
     
@@ -87,6 +143,7 @@ allCells.forEach((element) => {
       event.target.classList.remove('fa-land-mine-on')
       event.target.classList.add('fa-explosion')
 
+      //Afficher les mines qui ont été trouvées
       allCells.forEach(cell => {
         if(cell.classList.contains('flag') && cell.classList.contains('bomb')) {
           cell.classList.remove('flag');
@@ -97,12 +154,11 @@ allCells.forEach((element) => {
         };
        
       });
-      
+      return;
     };
     
     //Si case vide, on révéle la case puis on regarde celles autour
     if(!event.target.classList.contains('number') && !event.target.classList.contains('bomb')) {
-      console.log('case vide');
       element.classList.remove("hidden");
       element.classList.add("reveal");
       let cellId = event.target.id;
@@ -111,6 +167,9 @@ allCells.forEach((element) => {
       
 
     };
+
+    handleWin();
+
     
   });
 
@@ -130,6 +189,7 @@ function addFlag(event) {
     event.target.classList.remove("hidden");
     event.target.classList.add("flag");
     event.target.addEventListener("contextmenu", (e) => removeFlag(e));
+    handleCounter();
   } else {
     event.preventDefault();
   }
@@ -140,9 +200,10 @@ function removeFlag(event) {
   event.target.classList.remove("flag");
   event.target.classList.add("hidden");
   event.target.addEventListener("contextmenu", (e) => addFlag(e));
+  handleCounter();
+
 }
 //HANDLE RIGHT CLICK\\
-
 
 };
 
